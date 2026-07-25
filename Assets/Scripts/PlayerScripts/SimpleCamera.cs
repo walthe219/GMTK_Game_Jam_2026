@@ -25,7 +25,7 @@ public class SimpleCamera : MonoBehaviour
 
     void Update()
     {
-        Vector2 looking = lookMove.ReadValue<Vector2>() * sensitivity * Time.deltaTime;
+        Vector2 looking = lookMove.ReadValue<Vector2>() * sensitivity * Time.unscaledDeltaTime;
 
         xRot -= looking.y;
         xRot = Mathf.Clamp(xRot, -90f, 90f);

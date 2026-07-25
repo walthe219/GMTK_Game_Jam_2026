@@ -481,7 +481,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interact
   carryPoint: {fileID: 0}
-  interactDistance: 3
+  interactDistance: 5
 --- !u!1 &6882308826403056575
 GameObject:
   m_ObjectHideFlags: 0

@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using System.Collections;
 
 public class TimeManager : MonoBehaviour
 {
@@ -16,12 +17,26 @@ public class TimeManager : MonoBehaviour
 
     public TextMeshProUGUI timeHud;
 
+    private void Start()
+    {
+        
+    }
+
     private void Update()
     {
         velocityRatio = (1 + playerRB.linearVelocity.magnitude * velocityScaler) / (1 + timerRB.linearVelocity.magnitude * velocityScaler);
         timeScale =  Mathf.Clamp(velocityRatio,minTimeScale,maxTimeScale);
         Time.timeScale = timeScale;
+        timeHud.text = "Time Scale: " + timeScale.ToString("F1");
 
-        timeHud.text = timeScale.ToString();
+    }
+
+    IEnumerator UpdateUI()
+    {
+        while (true)
+        {
+            //timeHud.text = "Time Scale: " + timeScale.ToString("F1");
+            yield return new WaitForSecondsRealtime(1);
+        }
     }
 }
