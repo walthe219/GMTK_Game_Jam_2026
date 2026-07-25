@@ -42,17 +42,27 @@ public class Interact : MonoBehaviour
                 carryObj.transform.parent = carryPoint;
                 carryObj.transform.SetPositionAndRotation(carryPoint.position, carryPoint.rotation);
             }
-
-
-
-            if (carrying != null)
+            else
             {
-                GameObject carryObj = carrying.PutDown();
-                carryObj.transform.parent = carryPoint;
-                carryObj.transform.SetPositionAndRotation(hit.point, transform.rotation);
-                carrying = null;
+                if (carrying != null)
+                {
+                    GameObject carryObj = carrying.PutDown();
+                    carryObj.transform.parent = null;
+                    carryObj.transform.SetPositionAndRotation(hit.point, transform.rotation);
+                    carrying = null;
+                }
             }
         }
+
+    }
+
+    void PickUpItem()
+    {
+
+    }
+
+    void PutDownItem()
+    {
 
     }
 }
