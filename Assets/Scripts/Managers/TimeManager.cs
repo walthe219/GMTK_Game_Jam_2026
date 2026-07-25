@@ -1,4 +1,5 @@
 using UnityEngine;
+using TMPro;
 
 public class TimeManager : MonoBehaviour
 {
@@ -13,10 +14,14 @@ public class TimeManager : MonoBehaviour
     public Rigidbody playerRB;
     public Rigidbody timerRB;
 
+    public TextMeshProUGUI timeHud;
+
     private void Update()
     {
         velocityRatio = (1 + playerRB.linearVelocity.magnitude * velocityScaler) / (1 + timerRB.linearVelocity.magnitude * velocityScaler);
         timeScale =  Mathf.Clamp(velocityRatio,minTimeScale,maxTimeScale);
         Time.timeScale = timeScale;
+
+        timeHud.text = timeScale.ToString();
     }
 }
