@@ -10,9 +10,11 @@ public class PlayerMovement : MonoBehaviour
     public int actualSpeed;
     public float moveSpeed;
     public float walkSpeed;
+    public float sprintSpeed;
 
     private float desiredSpeed;
     private float prevDesiredSpeed;
+  
 
     public float speedIncreaseMultiplier;
     public float slopeIncreaseMultiplier;
@@ -51,6 +53,7 @@ public class PlayerMovement : MonoBehaviour
     public InputAction move;
     public InputAction jump;
     public InputAction crouch;
+    public InputAction sprint;
 
     private float vertInput;
     private float horzInput;
@@ -68,6 +71,7 @@ public class PlayerMovement : MonoBehaviour
         move.Enable();
         jump.Enable();
         crouch.Enable();
+        sprint.Enable();
     }
 
     private void OnDisable()
@@ -75,13 +79,15 @@ public class PlayerMovement : MonoBehaviour
         move.Disable();
         jump.Disable();
         crouch.Disable();
+        sprint.Disable();
     }
 
     public enum MovementState
     {
         walking,
         crouching,
-        airborne
+        airborne,
+        sprinting
     }
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -90,12 +96,14 @@ public class PlayerMovement : MonoBehaviour
         body = GetComponent<Rigidbody>();
         body.freezeRotation = true;
         startYScale = transform.localScale.y;
+        desiredSpeed = walkSpeed;
 
         if (InputSystem.actions)
         {
             move = InputSystem.actions.FindAction("Player/Move");
             jump = InputSystem.actions.FindAction("Player/Jump");
             crouch = InputSystem.actions.FindAction("Player/Crouch");
+            sprint = InputSystem.actions.FindAction("Player/Sprint");
             OnEnable();
         }
         //For portals to disable this script, through ControlScriptReference
@@ -107,7 +115,6 @@ public class PlayerMovement : MonoBehaviour
     {
         actualSpeed = (int)body.linearVelocity.magnitude;
         // Ground Check
-        //isGrounded = Physics.Raycast(transform.position, Vector3.down, playerHeight * 0.5f + 0.2f, groundMask);
         isGrounded = Physics.CheckSphere(new Vector3(transform.position.x, transform.position.y + 0.35f, transform.position.z), 0.4f, groundMask);
 
         // If the player is grounded for longer that 0.25 seconds it resets the jump count
@@ -134,6 +141,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        Debug.Log(desiredSpeed);
         MovePlayer();
         slope = OnSlope();
     }
@@ -156,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         else if (isGrounded)
         {
             state = MovementState.walking;
-            desiredSpeed = walkSpeed;
+            //desiredSpeed = walkSpeed;
         }
 
         // Airborne
@@ -195,7 +203,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Checks for drastic change in desiredSpeed
-        if (Mathf.Abs(desiredSpeed - prevDesiredSpeed) > 4f && moveSpeed != 0)
+        if (Mathf.Abs(desiredSpeed - prevDesiredSpeed) > 4f && moveSpeed != 0 && isGrounded)
         {
             StopCoroutine(SmoothlyLerpMoveSpeed());
             StartCoroutine(SmoothlyLerpMoveSpeed());
@@ -205,7 +213,19 @@ public class PlayerMovement : MonoBehaviour
             moveSpeed = desiredSpeed;
         }
 
-        prevDesiredSpeed = desiredSpeed;
+        if (sprint.WasPressedThisFrame())
+        {
+            Debug.Log("sprinting");
+            desiredSpeed = sprintSpeed;
+        }
+
+        if (sprint.WasReleasedThisFrame())
+        {
+            Debug.Log("STOPPED SPRITNING");
+
+           desiredSpeed = walkSpeed;
+        }
+        //prevDesiredSpeed = desiredSpeed;
     }
 
     // Changes the move speed to the desired speed gradually over time instead of instantly changing it
@@ -290,6 +310,8 @@ public class PlayerMovement : MonoBehaviour
         lastJumpTime = Time.time;
         jumpCount--;
     }
+
+   
 
 
     // Checks if the player is standing on a slope
