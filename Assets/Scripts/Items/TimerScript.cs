@@ -5,6 +5,9 @@ public class TimerScript : MonoBehaviour, ICarrayable
     public float time;
     public Vector3 velocity;
     public Rigidbody rb;
+    public CharacterController playeCC;
+
+    bool isCarried = false;
 
     private void Start()
     {
@@ -14,7 +17,12 @@ public class TimerScript : MonoBehaviour, ICarrayable
     void Update()
     {
         time += Time.deltaTime;
-        rb.linearVelocity = velocity;
+
+        if (isCarried)
+        {
+            //rb.linearVelocity = playeCC.velocity;
+        }
+        //rb.linearVelocity = velocity;
     }
 
     public void TurnPhysicsOff()
@@ -35,6 +43,7 @@ public class TimerScript : MonoBehaviour, ICarrayable
 
     public GameObject Pickup()
     {
+        isCarried = true;
         TurnPhysicsOff();
         Debug.Log("Picked up " + transform.name);
         return gameObject;
@@ -42,6 +51,7 @@ public class TimerScript : MonoBehaviour, ICarrayable
 
     public GameObject PutDown()
     {
+        isCarried = false;
         TurnPhysicsOn();
         Debug.Log("Put down " + transform.name);
         return gameObject;

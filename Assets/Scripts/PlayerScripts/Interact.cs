@@ -39,6 +39,7 @@ public class Interact : MonoBehaviour
             {
                 carrying = carrayable;
                 GameObject carryObj = carrying.Pickup();
+
                 carryObj.transform.parent = carryPoint;
                 carryObj.transform.SetPositionAndRotation(carryPoint.position, carryPoint.rotation);
             }
@@ -47,8 +48,10 @@ public class Interact : MonoBehaviour
                 if (carrying != null)
                 {
                     GameObject carryObj = carrying.PutDown();
+
                     carryObj.transform.parent = null;
-                    carryObj.transform.SetPositionAndRotation(hit.point, transform.rotation);
+                    
+                    carryObj.transform.SetPositionAndRotation(hit.point + hit.normal * 0.6f, transform.rotation);
                     carrying = null;
                 }
             }

@@ -70,7 +70,7 @@ public class SimpleMovement : MonoBehaviour
 
         movementVector = (tempVec.x * transform.right) + (tempVec.y * transform.forward);
 
-        charCont.Move(movementVector * playerSpeed * Time.unscaledDeltaTime);
+        //charCont.Move(movementVector * playerSpeed * Time.unscaledDeltaTime);
 
         if (playerJump.WasPressedThisFrame() && onGround)
         {
@@ -82,7 +82,7 @@ public class SimpleMovement : MonoBehaviour
         }
 
         myVelocity.y += myGravity * Time.unscaledDeltaTime;
-        charCont.Move(myVelocity * Time.unscaledDeltaTime);
+        charCont.Move(myVelocity * Time.unscaledDeltaTime + movementVector * playerSpeed * Time.unscaledDeltaTime);
 
         if (playerCrouch.IsPressed())
         {

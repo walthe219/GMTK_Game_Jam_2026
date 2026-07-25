@@ -12,7 +12,7 @@ public class TimeManager : MonoBehaviour
     public float maxTimeScale;
     public float maxSpeed;
 
-    public Rigidbody playerRB;
+    public CharacterController playerCC;
     public Rigidbody timerRB;
 
     public TextMeshProUGUI timeHud;
@@ -24,7 +24,7 @@ public class TimeManager : MonoBehaviour
 
     private void Update()
     {
-        velocityRatio = (1 + playerRB.linearVelocity.magnitude * velocityScaler) / (1 + timerRB.linearVelocity.magnitude * velocityScaler);
+        velocityRatio = (1 + playerCC.velocity.magnitude * velocityScaler) / (1 + timerRB.linearVelocity.magnitude * velocityScaler);
         timeScale =  Mathf.Clamp(velocityRatio,minTimeScale,maxTimeScale);
         Time.timeScale = timeScale;
         timeHud.text = "Time Scale: " + timeScale.ToString("F1");
