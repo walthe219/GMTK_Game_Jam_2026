@@ -62,7 +62,7 @@ public class SimpleMovement : MonoBehaviour
 
         if (onGround && myVelocity.y < 0)
         {
-            myVelocity.y = 0;
+            myVelocity.y = -5f;
             playerSpeed = currentPlayerSpeed;
         }
 
