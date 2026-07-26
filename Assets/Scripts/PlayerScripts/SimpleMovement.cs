@@ -12,6 +12,9 @@ public class SimpleMovement : MonoBehaviour
     private float myGravity = -10f;
     public float jumpH = 2f;
 
+    public float crouchHeightMult = 0.5f;
+    public float crouchSpeedMult = 0.7f;
+
     public Transform groundCheck;
     private float groundDist = 0.4f;
     public LayerMask groundMask;
@@ -22,8 +25,8 @@ public class SimpleMovement : MonoBehaviour
 
     private Vector3 movementVector;
     private Vector3 myVelocity;
+    private Vector3 externalVelocity;
 
-    public float updateTimer = 0f;
 
     //Input System
     public InputAction playerMove, playerCrouch, playerJump;
@@ -55,50 +58,44 @@ public class SimpleMovement : MonoBehaviour
 
     void GetInput()
     {
-
         onGround = Physics.CheckSphere(groundCheck.position, groundDist, groundMask);
 
         if (onGround && myVelocity.y < 0)
         {
-
-            myVelocity.y = -5f;
+            myVelocity.y = 0;
             playerSpeed = currentPlayerSpeed;
-
         }
 
         Vector2 tempVec = playerMove.ReadValue<Vector2>();
 
         movementVector = (tempVec.x * transform.right) + (tempVec.y * transform.forward);
 
-        //charCont.Move(movementVector * playerSpeed * Time.unscaledDeltaTime);
-
-        if (playerJump.WasPressedThisFrame() && onGround)
-        {
-
-            myVelocity.y = Mathf.Sqrt(jumpH * -2f * myGravity);
-            playerSpeed *= airDrag;
-            //Debug.Log("fuck");
-
-        }
-
-        myVelocity.y += myGravity * Time.unscaledDeltaTime;
-        charCont.Move(myVelocity * Time.unscaledDeltaTime + movementVector * playerSpeed * Time.unscaledDeltaTime);
-
         if (playerCrouch.IsPressed())
         {
-
-            charCont.height = currentPlayerHeight / 2;
-            playerSpeed *= 0.7f;
-
+            charCont.height = currentPlayerHeight * crouchHeightMult;
+            playerSpeed = currentPlayerSpeed * crouchSpeedMult;
         }
         else
         {
-
             charCont.height = currentPlayerHeight;
             playerSpeed = currentPlayerSpeed;
-
         }
 
+        if (playerJump.WasPressedThisFrame() && onGround)
+        {
+            myVelocity.y = Mathf.Sqrt(jumpH * -2f * myGravity);
+            playerSpeed *= airDrag;
+        }
+
+        myVelocity.y += myGravity * Time.unscaledDeltaTime;
+        charCont.Move((myVelocity + movementVector * playerSpeed  + externalVelocity ) * Time.unscaledDeltaTime);
+        if (externalVelocity != Vector3.zero)
+            externalVelocity = Vector3.zero;
+    }
+
+    public void ApplyExternalVelocity(Vector3 velocity)
+    {
+        externalVelocity += velocity;
     }
 
 }

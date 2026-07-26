@@ -22,17 +22,19 @@ public class Interact : MonoBehaviour
         {
             Debug.Log("Try interacting");
             RaycastHit hit;
-            bool hitSomething = Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, interactDistance);
+            bool hitSomething = Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, interactDistance, ~0, QueryTriggerInteraction.Ignore);
 
             if (!hitSomething)
             {
                 return;
             }
-                var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
-                var carrayable = hit.collider.gameObject.GetComponent<ICarrayable>();
 
+            var interactable = hit.collider.gameObject.GetComponent<IInteractable>();
+            var carrayable = hit.collider.gameObject.GetComponent<ICarrayable>();
+
+            Debug.Log(interactable);
             if (interactable != null)
-            {
+            { 
                 interactable.Interact();
             }
             else if (carrayable != null && carrying == null)

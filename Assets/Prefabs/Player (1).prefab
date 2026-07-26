@@ -151,7 +151,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 374df2f951dbf4c418e85d0241ad8502, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SimpleCamera
-  sensitivity: 100
+  sensitivity: 50
   body: {fileID: 1213958118573233739}
   lookMove:
     m_Name: Look Move
@@ -305,7 +305,7 @@ Transform:
   m_GameObject: {fileID: 6099559445198559208}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1.09, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -407,15 +407,16 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::SimpleMovement
   charCont: {fileID: 4354164360449330557}
   currentPlayerSpeed: 0
-  playerSpeed: 15
-  airDrag: 0.5
-  jumpH: 2
+  playerSpeed: 10
+  airDrag: 1
+  jumpH: 1.5
+  crouchHeightMult: 0.5
+  crouchSpeedMult: 0.5
   groundCheck: {fileID: 4711751919308572122}
   groundMask:
     serializedVersion: 2
     m_Bits: 1024
   canMove: 1
-  updateTimer: 0
   playerMove:
     m_Name: Player Move
     m_Type: 0
@@ -480,7 +481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f36422830e1eebb4dab9706c390c560e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::Interact
-  carryPoint: {fileID: 0}
+  carryPoint: {fileID: 8322532350505140794}
   interactDistance: 5
 --- !u!1 &6882308826403056575
 GameObject:
