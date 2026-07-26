@@ -3,8 +3,10 @@ using UnityEngine;
 public class LauncherScript : MonoBehaviour
 {
     [Range(0f, 90f)]
-    public float launchAngle;
-    public float launchPower;
+
+  
+    [SerializeField] public float launchAngle;
+    [SerializeField] public float launchPower;
 
     private void OnTriggerEnter(Collider other)
     {

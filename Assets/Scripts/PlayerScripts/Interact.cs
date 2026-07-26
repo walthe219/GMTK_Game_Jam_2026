@@ -5,15 +5,21 @@ public class Interact : MonoBehaviour
 {
     Camera cam;
     InputAction interact;
+    public InputAction toss;
+
 
     public Transform carryPoint;
     public float interactDistance;
     public ICarrayable carrying;
+    public bool bIsCarryingObject = false;
+
+    [SerializeField] public float tossForce = 20f;
 
     private void OnEnable()
     {
         cam = Camera.main;
         interact = InputSystem.actions.FindAction("Interact");
+        toss = InputSystem.actions.FindAction("Toss");
     }
 
     void Update()
@@ -39,26 +45,48 @@ public class Interact : MonoBehaviour
             }
             else if (carrayable != null && carrying == null)
             {
+                bIsCarryingObject = true;
                 carrying = carrayable;
                 GameObject carryObj = carrying.Pickup();
 
                 carryObj.transform.parent = carryPoint;
                 carryObj.transform.SetPositionAndRotation(carryPoint.position, carryPoint.rotation);
+                
             }
             else
             {
                 if (carrying != null)
                 {
+                   
                     GameObject carryObj = carrying.PutDown();
 
                     carryObj.transform.parent = null;
                     
                     carryObj.transform.SetPositionAndRotation(hit.point + hit.normal * 0.6f, transform.rotation);
-                    carrying = null;
+                    carrying = null; 
+                    bIsCarryingObject = false;
                 }
             }
         }
 
+        TossObject();
+
+    }
+
+
+    void TossObject()
+    {
+        if (Keyboard.current.qKey.wasPressedThisFrame && bIsCarryingObject)
+        {
+            GameObject carryObj = carrying.PutDown();
+            carryObj.transform.parent = null;
+            carrying = null;
+            Debug.Log("Toss Pressed!!!!!!!");
+            bIsCarryingObject = false;
+
+            var carryObjRigidBody = carryObj.GetComponent<Rigidbody>();
+            carryObjRigidBody.AddForce(cam.transform.forward* 30.0f, ForceMode.Impulse);
+        }
     }
 
     void PickUpItem()
