@@ -17,15 +17,18 @@ public class BoxScript : MonoBehaviour, ICarrayable
         rb.useGravity = false;
         rb.detectCollisions = false;
         rb.freezeRotation = true;
+        rb.Sleep();
     }
 
     public void TurnPhysicsOn()
     {
-        rb.interpolation = RigidbodyInterpolation.Interpolate;
         rb.isKinematic = false;
         rb.detectCollisions = true;
         rb.useGravity = true;
         rb.freezeRotation = false;
+
+        rb.interpolation = RigidbodyInterpolation.Interpolate;
+        rb.WakeUp();
     }
 
     public GameObject Pickup()

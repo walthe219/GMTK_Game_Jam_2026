@@ -483,6 +483,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::Interact
   carryPoint: {fileID: 8322532350505140794}
   interactDistance: 5
+  showPutDownGhost: 1
+  putDownGhostPrefab: {fileID: 660719848048712085, guid: 6bd99c27657e9724e97c2adcceefa48d, type: 3}
 --- !u!1 &6882308826403056575
 GameObject:
   m_ObjectHideFlags: 0
