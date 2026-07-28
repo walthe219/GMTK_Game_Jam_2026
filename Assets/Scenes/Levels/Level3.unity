@@ -1039,7 +1039,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: OnButtonPress.m_PersistentCalls.m_Calls.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: OnButtonUnpressed.m_PersistentCalls.m_Calls.Array.size
