@@ -26,6 +26,7 @@ public class Interact : MonoBehaviour
     {
         if (interact.WasPressedThisFrame())
         {
+
             Debug.Log("Try interacting");
             RaycastHit hit;
             bool hitSomething = Physics.Raycast(cam.transform.position, cam.transform.forward, out hit, interactDistance, ~0, QueryTriggerInteraction.Ignore);
@@ -48,9 +49,12 @@ public class Interact : MonoBehaviour
                 bIsCarryingObject = true;
                 carrying = carrayable;
                 GameObject carryObj = carrying.Pickup();
+                var carryObjRigidbody = carryObj.GetComponent<Rigidbody>();
+
 
                 carryObj.transform.parent = carryPoint;
                 carryObj.transform.SetPositionAndRotation(carryPoint.position, carryPoint.rotation);
+                carryObjRigidbody.MovePosition(carryPoint.position);
                 
             }
             else
@@ -81,11 +85,9 @@ public class Interact : MonoBehaviour
             GameObject carryObj = carrying.PutDown();
             carryObj.transform.parent = null;
             carrying = null;
-            Debug.Log("Toss Pressed!!!!!!!");
             bIsCarryingObject = false;
-
-            var carryObjRigidBody = carryObj.GetComponent<Rigidbody>();
-            carryObjRigidBody.AddForce(cam.transform.forward* 30.0f, ForceMode.Impulse);
+            var carryObjRigidbody = carryObj.GetComponent<Rigidbody>();
+            carryObjRigidbody.AddForce(cam.transform.forward * tossForce, ForceMode.Impulse);
         }
     }
 

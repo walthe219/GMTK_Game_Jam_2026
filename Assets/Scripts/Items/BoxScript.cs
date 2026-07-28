@@ -15,7 +15,7 @@ public class BoxScript : MonoBehaviour, ICarrayable
         rb.interpolation = RigidbodyInterpolation.None;
         rb.isKinematic = true;
         rb.useGravity = false;
-        rb.detectCollisions = false;
+        rb.detectCollisions = true;
         rb.freezeRotation = true;
     }
 
