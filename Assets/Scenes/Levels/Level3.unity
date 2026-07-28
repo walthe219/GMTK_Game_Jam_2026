@@ -1034,16 +1034,20 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
+      propertyPath: pressDist
+      value: 0.07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: pressedTime
       value: 8
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: OnButtonPress.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: OnButtonUnpressed.m_PersistentCalls.m_Calls.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4351307484914975755, guid: b03b85d6c8196bc4d8cf78bc6a9a8e02, type: 3}
       propertyPath: OnButtonPress.m_PersistentCalls.m_Calls.Array.data[0].m_Mode

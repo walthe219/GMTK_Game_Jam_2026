@@ -224,6 +224,7 @@ MonoBehaviour:
   OnButtonUnpressed:
     m_PersistentCalls:
       m_Calls: []
+  pressDist: 0.05
   pressedTime: 5
 --- !u!135 &6283008151726989083
 SphereCollider:

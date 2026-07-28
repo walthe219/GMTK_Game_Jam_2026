@@ -15,6 +15,7 @@ public class WeightedPlate : MonoBehaviour
     [Header("Events")]
     public UnityEvent onActivate;
     public UnityEvent onDeactivate;
+
     private bool isActivated = false;
 
     void Start()

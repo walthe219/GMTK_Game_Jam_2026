@@ -6,6 +6,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
 {
     public UnityEvent OnButtonPress;
     public UnityEvent OnButtonUnpressed;
+    public float pressDist = 0.05f;
     public float pressedTime;
 
     bool isPressed;
@@ -21,7 +22,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
 
     IEnumerator Pressed(float duration)
     {
-        transform.position -= new Vector3(0f, 0.15f, 0f);
+        transform.position -= new Vector3(0f, pressDist, 0f);
         float elapsed = 0f;
         while (elapsed < duration)
         {
@@ -30,6 +31,6 @@ public class ButtonScript : MonoBehaviour, IInteractable
         }
         isPressed = false;
         OnButtonUnpressed.Invoke();
-        transform.position += new Vector3(0f, 0.15f, 0f);
+        transform.position += new Vector3(0f, pressDist, 0f);
     }
 }

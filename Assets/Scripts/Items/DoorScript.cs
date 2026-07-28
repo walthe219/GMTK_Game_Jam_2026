@@ -8,7 +8,9 @@ public class DoorScript : MonoBehaviour
     public float slidingDist = 3;
     public float slideTime = 1;
 
-    bool isOpened = false;
+    private bool isOpened = false;
+    private int activatorCount = 0;
+
     private Vector3 leftClosedPos;
     private Vector3 leftOpenedPos;
     private Vector3 rightClosedPos;
@@ -28,25 +30,33 @@ public class DoorScript : MonoBehaviour
     [ContextMenu("OpenDoor()")]
     public void OpenDoor()
     {
-        if (isOpened) return;
+        activatorCount++;
 
-        StopActiveCoroutines();
-        isOpened = true;
+        if (activatorCount == 1)
+        { 
+            StopActiveCoroutines();
+            isOpened = true;
 
-        leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftOpenedPos, slideTime));
-        rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightOpenedPos, slideTime));
+            leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftOpenedPos, slideTime));
+            rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightOpenedPos, slideTime));
+        }
     }
 
     [ContextMenu("CloseDoor()")]
     public void CloseDoor()
     {
-        if (!isOpened) return;
+        if (activatorCount <= 0) return;
 
-        StopActiveCoroutines();
-        isOpened = false;
+        activatorCount--;
 
-        leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftClosedPos, slideTime));
-        rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightClosedPos, slideTime));
+        if(activatorCount == 0)
+        {
+            StopActiveCoroutines();
+            isOpened = false;
+
+            leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftClosedPos, slideTime));
+            rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightClosedPos, slideTime));
+        }
     }
 
     IEnumerator slideOut(GameObject obj, Vector3 target, float time)
