@@ -12,6 +12,10 @@ public class WeightedPlate : MonoBehaviour
     public Vector3 pressedOffset = new Vector3(0, -0.1f, 0);
     private Vector3 startPos;
 
+    [Header("Sounds")]
+    public AudioSource audio;
+    public AudioClip activteSound;
+
     [Header("Events")]
     public UnityEvent onActivate;
     public UnityEvent onDeactivate;
@@ -50,8 +54,16 @@ public class WeightedPlate : MonoBehaviour
         if (shouldActivate != isActivated)
         {
             isActivated = shouldActivate;
-            if (isActivated) onActivate.Invoke();
-            else onDeactivate.Invoke();
+            if (isActivated)
+            {
+                audio.PlayOneShot(activteSound);
+                onActivate.Invoke();
+            }
+            else
+            {
+                audio.PlayOneShot(activteSound);
+                onDeactivate.Invoke();
+            }
         }
 
         // Move button visually

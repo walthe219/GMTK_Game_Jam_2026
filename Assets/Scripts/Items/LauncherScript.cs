@@ -6,16 +6,23 @@ public class LauncherScript : MonoBehaviour
     public float launchAngle;
     public float launchPower;
 
+    [Header("Sounds")]
+    public AudioSource audio;
+    public AudioClip activteSound;
+
+
     private void OnTriggerEnter(Collider other)
     {
         var rb = other.GetComponent<Rigidbody>();
         var mov = other.GetComponent<SimpleMovement>();
         if(rb != null)
         {
+            audio.PlayOneShot(activteSound);
             LaunchRigidbody(rb);
         }
         else if (mov)
         {
+            audio.PlayOneShot(activteSound);
             LaunchPlayer(mov);
         }
     }

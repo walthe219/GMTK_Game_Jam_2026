@@ -18,6 +18,12 @@ public class DoorScript : MonoBehaviour
     private Coroutine leftDoorCoroutine;
     private Coroutine rightDoorCoroutine;
 
+    [Header("Sounds")]
+    public AudioSource audio;
+    public AudioClip doorOpenedSound;
+    public AudioClip doorClosedSound;
+    
+
     private void Start()
     {
         leftClosedPos = leftDoor.transform.position;
@@ -37,6 +43,7 @@ public class DoorScript : MonoBehaviour
             StopActiveCoroutines();
             isOpened = true;
 
+            audio.PlayOneShot(doorOpenedSound);
             leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftOpenedPos, slideTime));
             rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightOpenedPos, slideTime));
         }
@@ -56,6 +63,7 @@ public class DoorScript : MonoBehaviour
 
             leftDoorCoroutine = StartCoroutine(slideOut(leftDoor, leftClosedPos, slideTime));
             rightDoorCoroutine = StartCoroutine(slideOut(rightDoor, rightClosedPos, slideTime));
+            audio.PlayOneShot(doorClosedSound);
         }
     }
 

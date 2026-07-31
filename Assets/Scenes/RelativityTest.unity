@@ -1061,6 +1061,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Weighted Plate
       objectReference: {fileID: 0}
+    - target: {fileID: 5491301191726766412, guid: 7d9a4800c8392b74c90db76b9518a53d, type: 3}
+      propertyPath: m_Pitch
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5491301191726766412, guid: 7d9a4800c8392b74c90db76b9518a53d, type: 3}
+      propertyPath: m_Resource
+      value: 
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

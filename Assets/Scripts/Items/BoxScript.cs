@@ -10,6 +10,11 @@ public class BoxScript : MonoBehaviour, ICarrayable
     public event Action OnPickup;
     public event Action OnPutDown;
 
+    [Header("Sounds")]
+    public AudioSource audio;
+    public AudioClip pickedUpSound;
+    public AudioClip putDownSound;
+
     public void TurnPhysicsOff()
     {
         rb.interpolation = RigidbodyInterpolation.None;
@@ -36,6 +41,7 @@ public class BoxScript : MonoBehaviour, ICarrayable
         isCarried = true;
         TurnPhysicsOff();
         OnPickup?.Invoke();
+        audio.PlayOneShot(pickedUpSound);
         Debug.Log("Picked up " + transform.name);
         return gameObject;
     }
@@ -45,6 +51,7 @@ public class BoxScript : MonoBehaviour, ICarrayable
         isCarried = false;
         TurnPhysicsOn();
         OnPutDown?.Invoke();
+        audio.PlayOneShot(putDownSound);
         Debug.Log("Put down " + transform.name);
         return gameObject;
     }

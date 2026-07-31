@@ -9,8 +9,9 @@ public class ButtonScript : MonoBehaviour, IInteractable
     public float pressDist = 0.05f;
     public float pressedTime;
 
-    public AudioClip buttonPress;
-    public AudioClip clockTick;
+    [Header("Sounds")]
+    public AudioClip buttonPressSound;
+    public AudioClip clockTickSound;
     private AudioSource audio;
     
 
@@ -32,7 +33,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
 
     IEnumerator Pressed(float duration)
     {
-        audio.PlayOneShot(buttonPress);
+        audio.PlayOneShot(buttonPressSound);
         var clockTicking = StartCoroutine(RepeatedClockTick());
 
         transform.position -= new Vector3(0f, pressDist, 0f);
@@ -47,7 +48,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
         transform.position += new Vector3(0f, pressDist, 0f);
 
         StopCoroutine(clockTicking);
-        audio.PlayOneShot(buttonPress);
+        audio.PlayOneShot(buttonPressSound);
     }
 
     IEnumerator RepeatedClockTick( )
@@ -57,7 +58,7 @@ public class ButtonScript : MonoBehaviour, IInteractable
         {
             yield return new WaitForSeconds(1f);
             //clockTick.pitch = Time.timeScale;
-            audio.PlayOneShot(clockTick);
+            audio.PlayOneShot(clockTickSound);
         }
     }
 }
