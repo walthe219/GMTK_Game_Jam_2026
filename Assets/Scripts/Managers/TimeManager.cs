@@ -4,11 +4,11 @@ using System.Collections;
 
 public class TimeManager : MonoBehaviour
 {
+    public bool timeDilationActive = true;
+
     public float timeScale = 1f;
     public float playerVelocityScaler = 0.1f;
-    public AnimationCurve playerCurve;
     public float timerVelocityScaler = 0.1f;
-    public AnimationCurve timerCurve;
     public float velocityRatio = 1;
 
     public float minTimeScale;
@@ -30,12 +30,15 @@ public class TimeManager : MonoBehaviour
     }
 
     private void Update()
-    { 
-        velocityRatio = !timerCarried ? (1 + playerCC.velocity.magnitude * playerVelocityScaler) / (1 + timerRB.linearVelocity.magnitude * timerVelocityScaler) : 1;
-        timeScale =  Mathf.Clamp(velocityRatio,minTimeScale,maxTimeScale);
-        Time.timeScale = timeScale;
-        Time.fixedDeltaTime = 0.02f * timeScale;
-        timeHud.text = "Time Scale: " + timeScale.ToString("F1");
+    {
+        if (timeDilationActive)
+        {
+            velocityRatio = !timerCarried ? (1 + playerCC.velocity.magnitude * playerVelocityScaler) / (1 + timerRB.linearVelocity.magnitude * timerVelocityScaler) : 1;
+            timeScale =  Mathf.Clamp(velocityRatio,minTimeScale,maxTimeScale);
+            Time.timeScale = timeScale;
+            Time.fixedDeltaTime = 0.02f * timeScale;
+            timeHud.text = "Time Scale: " + timeScale.ToString("F1");
+        }
 
     }
 
