@@ -9,21 +9,22 @@ public class LauncherScript : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
         var rb = other.GetComponent<Rigidbody>();
+        var mov = other.GetComponent<SimpleMovement>();
         if(rb != null)
         {
             LaunchRigidbody(rb);
         }
-        else if (false)
+        else if (mov)
         {
-
+            LaunchPlayer(mov);
         }
     }
 
     void LaunchPlayer(SimpleMovement player)
     {
         Debug.Log("Launching " + player.gameObject.name);
-        Vector3 launchDir = new Vector3(Mathf.Cos(launchAngle), Mathf.Sin(launchAngle), 0);
-        player.ApplyExternalVelocity(launchDir * 1000 * launchPower);
+        Vector3 launchDir = transform.forward * Mathf.Cos(launchAngle * Mathf.Deg2Rad) + transform.up * Mathf.Sin(launchAngle * Mathf.Deg2Rad); ;
+        player.ApplyExternalVelocity(launchDir * launchPower/2);
     }
 
     void LaunchRigidbody(Rigidbody rb)

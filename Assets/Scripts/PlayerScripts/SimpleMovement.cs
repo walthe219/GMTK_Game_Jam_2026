@@ -27,6 +27,7 @@ public class SimpleMovement : MonoBehaviour
     private Vector3 myVelocity;
     private Vector3 externalVelocity;
 
+    private bool isExternalLaunchActive = false;
 
     //Input System
     public InputAction playerMove, playerCrouch, playerJump;
@@ -60,10 +61,26 @@ public class SimpleMovement : MonoBehaviour
     {
         onGround = Physics.CheckSphere(groundCheck.position, groundDist, groundMask);
 
-        if (onGround && myVelocity.y < 0)
+        if (onGround)
         {
-            myVelocity.y = -5f;
-            playerSpeed = currentPlayerSpeed;
+            if (isExternalLaunchActive && myVelocity.y <= 0)
+            {
+                externalVelocity = Vector3.zero;
+                isExternalLaunchActive = false;
+            }
+
+            if (myVelocity.y < 0)
+            {
+                myVelocity.y = -5f;
+                playerSpeed = currentPlayerSpeed;
+            }
+        }
+        else
+        {
+            if (externalVelocity != Vector3.zero)
+            {
+                isExternalLaunchActive = true;
+            }
         }
 
         Vector2 tempVec = playerMove.ReadValue<Vector2>();
@@ -89,13 +106,15 @@ public class SimpleMovement : MonoBehaviour
 
         myVelocity.y += myGravity * Time.unscaledDeltaTime;
         charCont.Move((myVelocity + movementVector * playerSpeed  + externalVelocity ) * Time.unscaledDeltaTime);
-        if (externalVelocity != Vector3.zero)
-            externalVelocity = Vector3.zero;
+        
     }
 
     public void ApplyExternalVelocity(Vector3 velocity)
     {
         externalVelocity += velocity;
+
+        if(Mathf.Abs(externalVelocity.y) > 0)
+            myVelocity.y = Mathf.Max(0f, myVelocity.y);
     }
 
 }
